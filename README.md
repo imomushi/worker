@@ -2,11 +2,6 @@ imomushi-worker
 ===========
 
 [![Build Status](https://travis-ci.org/imomushi/imomushi-worker.png)](https://travis-ci.org/imomushi/imomushi-worker)
-[![Latest Stable Version](https://poser.pugx.org/imomushi/imomushi-worker/v/stable.png)](https://packagist.org/packages/imomushi/imomushi-worker)
-[![Total Downloads](https://poser.pugx.org/imomushi/imomushi-worker/downloads.png)](https://packagist.org/packages/imomushi/imomushi-worker)
-[![Code Coverage](https://scrutinizer-ci.com/g/imomushi/imomushi-worker/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/imomushi/imomushi-worker/?branch=master)
-[![License](https://poser.pugx.org/imomushi/imomushi-worker/license.png)](https://packagist.org/packages/imomushi/imomushi-worker)
-
 
 ## Installation ##
 
