@@ -13,7 +13,7 @@ imomushi-worker
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `~`.
 
 ```
-composer require imomushi/imomushi-worker
+composer require imomushi/worker
 ```
 
 ## Basic Usage ##

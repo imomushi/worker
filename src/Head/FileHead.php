@@ -74,7 +74,7 @@ class FileHead
             }
             $lines = array_map(
                 'json_decode',
-                array_filter(split(PHP_EOL, $data))
+                array_filter(explode(PHP_EOL, $data))
             );
             $this -> size = $this -> currentSize;
         }
