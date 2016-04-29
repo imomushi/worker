@@ -8,7 +8,11 @@ imomushi-worker
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `~`.
 
 ```
-composer require imomushi/worker
+composer require imomushi/worker:dev-master
+cd vendor/imomushi/worker/
+make
+cd -
+./vendor/bin/imomushi-worker 
 ```
 
 ## Basic Usage ##
