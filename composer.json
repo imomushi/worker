@@ -1,5 +1,5 @@
 {
-    "name": "imomushi/imomushi-worker",
+    "name": "imomushi/worker",
     "description": "Pluggable Pipeline Woeker in PHP",
     "license": "MIT",
     "authors": [
