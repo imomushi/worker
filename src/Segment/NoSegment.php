@@ -30,5 +30,6 @@ class NoSegment
 
     public function execute($arguments)
     {
+        return get_class($this);
     }
 }

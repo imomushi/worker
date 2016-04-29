@@ -33,10 +33,10 @@ class FileHead
     /**
      * Constructer
      */
-    public function __construct($file)
+    public function __construct($file, $tail)
     {
         $this -> file = $file;
-        $this -> body = new Body();
+        $this -> body = new Body($tail);
     }
 
     public function open()
