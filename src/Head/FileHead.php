@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker;
+namespace Imomushi\Worker\Head;
 
 /**
- * Class FileMonitor
+ * Class FileHead
  *
  * @package Imomushi\Worker
  */
-class FileMonitor
+class FileHead
 {
     /**
      * @var
@@ -24,6 +24,8 @@ class FileMonitor
     private $fh;
     private $size = 0;
     private $currentSize = 0;
+
+    public $inTest = false;
 
     /**
      * Constructer
@@ -74,5 +76,15 @@ class FileMonitor
         }
         $this -> close();
         return $lines;
+    }
+
+    public function run()
+    {
+        do {
+            $input = $this ->getInput();
+            if (0 != count($input)) {
+                print_r($input);
+            }
+        } while (!$this -> inTest);
     }
 }

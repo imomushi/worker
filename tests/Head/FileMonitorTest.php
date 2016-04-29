@@ -8,27 +8,28 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests;
+namespace Imomushi\Worker\Tests\Head;
 
-use Imomushi\Worker\FileMonitor;
+use Imomushi\Worker\Head\FileHead;
 
 /**
- * Class FileMonitorTest
+ * Class FileHeadTest
  *
  * @package Imomushi\Worker\Tests
  */
 
-class FileMonitorTest extends \PHPUnit_Framework_TestCase
+class FileHeadTest extends \PHPUnit_Framework_TestCase
 {
     /*
      * @vars
      */
-    private $fileMonitor;
+    private $fileHead;
     private $tmpFile;
     public function setUp()
     {
         $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $this -> fileMonitor = new FileMonitor($this -> tmpFile);
+        $this -> fileHead = new FileHead($this -> tmpFile);
+        $this -> fileHead -> inTest = true;
 
     }
 
@@ -40,8 +41,8 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $this -> assertInstanceOf(
-            'Imomushi\Worker\FileMonitor',
-            $this -> fileMonitor
+            'Imomushi\Worker\Head\FileHead',
+            $this -> fileHead
         );
     }
 
@@ -49,12 +50,12 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileMonitor,
+                $this -> fileHead,
                 'open'
             )
         );
         $this -> assertTrue(
-            $this -> fileMonitor -> open()
+            $this -> fileHead -> open()
         );
     }
 
@@ -62,14 +63,14 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileMonitor,
+                $this -> fileHead,
                 'close'
             )
         );
 
-        $this -> fileMonitor -> open();
+        $this -> fileHead -> open();
         $this -> assertTrue(
-            $this -> fileMonitor -> close()
+            $this -> fileHead -> close()
         );
     }
 
@@ -77,20 +78,20 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileMonitor,
+                $this -> fileHead,
                 'changed'
             )
         );
 
-        $this -> fileMonitor -> open();
+        $this -> fileHead -> open();
         $this -> assertFalse(
-            $this -> fileMonitor -> changed()
+            $this -> fileHead -> changed()
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $tmpFileMonitor = new FileMonitor($tmp);
-        $tmpFileMonitor -> open();
-        $tmpFileMonitor -> changed();
+        $tmpFileHead = new FileHead($tmp);
+        $tmpFileHead -> open();
+        $tmpFileHead -> changed();
 
         $fh = fopen($tmp, 'w');
         fwrite($fh, '{"pipeline_id": "hogehoge", "segment_id": 1,'.
@@ -98,10 +99,10 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
         fclose($fh);
 
         $this -> assertTrue(
-            $tmpFileMonitor -> changed()
+            $tmpFileHead -> changed()
         );
 
-        $tmpFileMonitor -> close();
+        $tmpFileHead -> close();
         unlink($tmp);
     }
 
@@ -109,11 +110,11 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileMonitor,
+                $this -> fileHead,
                 'getInput'
             )
         );
-        $input = $this -> fileMonitor -> getInput();
+        $input = $this -> fileHead -> getInput();
         $this -> assertEmpty(
             $input
         );
@@ -123,7 +124,7 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
             '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL);
         fclose($fh);
 
-        $input = $this -> fileMonitor -> getInput();
+        $input = $this -> fileHead -> getInput();
         $this -> assertNotEmpty(
             $input
         );
@@ -132,7 +133,7 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
             count($input)
         );
 
-        $input = $this -> fileMonitor -> getInput();
+        $input = $this -> fileHead -> getInput();
         $this -> assertEmpty(
             $input
         );
@@ -149,7 +150,7 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
         fwrite($fh, '{"pipeline_id": "hogehoge", "segment_id": 6,'.
             '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL);
         fclose($fh);
-        $input = $this -> fileMonitor -> getInput();
+        $input = $this -> fileHead -> getInput();
         $this -> assertNotEmpty(
             $input
         );
@@ -157,5 +158,21 @@ class FileMonitorTest extends \PHPUnit_Framework_TestCase
             5,
             count($input)
         );
+    }
+
+    public function testRun()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> fileHead,
+                'run'
+            )
+        );
+
+        $fh = fopen($this -> tmpFile, 'w');
+        fwrite($fh, '{"pipeline_id": "hogehoge", "segment_id": 1,'.
+            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL);
+        fclose($fh);
+        $this -> fileHead -> run();
     }
 }

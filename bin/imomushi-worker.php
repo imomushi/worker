@@ -1,11 +1,11 @@
 #!/usr/bin/env php
 <?php
 require __DIR__.'/../vendor/autoload.php';
-use Imomushi\Worker\FileMonitor;
+use Imomushi\Worker\Head\FileHead;
 
-$fileMonitor  = new FileMonitor("/tmp/input.txt");
+$fileHead  = new FileHead("/tmp/input.txt");
 while(true){
-    $input = $fileMonitor->getInput();
+    $input = $fileHead->getInput();
     if (0 != count($input)) {
         print_r($input);
     }
