@@ -52,10 +52,28 @@ class BodyTest extends \PHPUnit_Framework_TestCase
         );
         $request = json_decode(
             '{"pipeline_id": "hogehoge", "segment_id": 2,'.
-            '"function":"Echo", "args": {"arg1": 1, "arg2": 2}}'
+            '"function":"EchoStdout", "args": {"arg1": 1, "arg2": 2}}'
         );
         $this -> assertTrue(
             $this -> target -> dispatch($request)
+        );
+    }
+
+    public function testCreate()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> target,
+                'create'
+            )
+        );
+        $this -> assertInstanceOf(
+            'Imomushi\Worker\Segment\EchoStdout',
+            $this -> target -> create('EchoStdout')
+        );
+        $this -> assertInstanceOf(
+            'Imomushi\Worker\Segment\NoSegment',
+            $this -> target -> create('Arienai')
         );
     }
 }

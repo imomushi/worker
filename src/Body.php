@@ -32,4 +32,14 @@ class Body
     {
         return true;
     }
+
+    public function create($target)
+    {
+        $target = '\Imomushi\Worker\Segment\\'.$target;
+        if (!class_exists($target)) {
+            return new \Imomushi\Worker\Segment\NoSegment();
+        }
+
+        return new $target();
+    }
 }
