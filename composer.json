@@ -20,12 +20,12 @@
         "squizlabs/php_codesniffer": "^2.6"
     },
     "autoload": {
-        "psr-4": {
+        "psr-0": {
             "Imomushi\\Worker\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-4": {
+        "psr-0": {
             "Imomushi\\Worker\\Tests\\": "tests/"
         }
     },
