@@ -20,11 +20,18 @@ class EchoStdout
     /**
      * @var
      */
+    public $stdOut;
 
     /**
      * Constructer
      */
     public function __construct()
     {
+        $this -> stdOut = fopen('php://stdout', 'w');
+    }
+
+    public function execute($arguments)
+    {
+        fprintf($this -> stdOut, "%s", var_export($arguments, true));
     }
 }

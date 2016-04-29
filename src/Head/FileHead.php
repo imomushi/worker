@@ -25,6 +25,7 @@ class FileHead
     private $file;
     private $fh;
     private $size = 0;
+    private $body;
     private $currentSize = 0;
 
     public $inTest = false;
@@ -35,6 +36,7 @@ class FileHead
     public function __construct($file)
     {
         $this -> file = $file;
+        $this -> body = new Body();
     }
 
     public function open()
@@ -60,7 +62,7 @@ class FileHead
         return $this -> size != $this -> currentSize;
     }
 
-    public function getInput()
+    public function getRequest()
     {
         $this -> open();
         $lines = array();
@@ -83,9 +85,9 @@ class FileHead
     public function run()
     {
         do {
-            $input = $this ->getInput();
-            if (0 != count($input)) {
-                print_r($input);
+            $requests = $this ->getRequest();
+            foreach ($this -> getRequest() as $request) {
+                $this -> body -> dispatch($request);
             }
         } while (!$this -> inTest);
     }

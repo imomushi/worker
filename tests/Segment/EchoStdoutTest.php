@@ -24,14 +24,17 @@ class EchoStdoutTest extends \PHPUnit_Framework_TestCase
      * @vars
      */
     private $target;
+    private $tmpStdOut;
     public function setUp()
     {
+        $this -> tmpStdOut = tempnam(sys_get_temp_dir(), 'Imomushi.Segment.EchoStdout.');
         $this -> target = new EchoStdout();
 
     }
 
     public function tearDown()
     {
+        unlink($this -> tmpStdOut);
     }
 
     public function testConstruct()
@@ -39,6 +42,30 @@ class EchoStdoutTest extends \PHPUnit_Framework_TestCase
         $this -> assertInstanceOf(
             'Imomushi\Worker\Segment\EchoStdout',
             $this -> target
+        );
+    }
+
+    public function testExecute()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> target,
+                'execute'
+            )
+        );
+        $arguments = json_decode(
+            '{"arg1": 1, "arg2": 2}'
+        );
+        $this -> target -> stdOut = fopen($this -> tmpStdOut, 'wb');
+        $this -> assertNull(
+            $this -> target -> execute($arguments)
+        );
+        $this -> assertEquals(
+            "stdClass::__set_state(array(\n".
+            "   'arg1' => 1,\n".
+            "   'arg2' => 2,\n".
+            "))",
+            file_get_contents($this -> tmpStdOut)
         );
     }
 }

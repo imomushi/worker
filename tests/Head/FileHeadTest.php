@@ -109,75 +109,75 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         unlink($tmp);
     }
 
-    public function testGetInput()
+    public function testGetRequest()
     {
         $this -> assertTrue(
             method_exists(
                 $this -> target,
-                'getInput'
+                'getRequest'
             )
         );
-        $input = $this -> target -> getInput();
+        $request = $this -> target -> getRequest();
         $this -> assertEmpty(
-            $input
+            $request
         );
 
         $fh = fopen($this -> tmpFile, 'w');
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
 
-        $input = $this -> target -> getInput();
+        $request = $this -> target -> getRequest();
         $this -> assertNotEmpty(
-            $input
+            $request
         );
         $this -> assertEquals(
             1,
-            count($input)
+            count($request)
         );
 
-        $input = $this -> target -> getInput();
+        $request = $this -> target -> getRequest();
         $this -> assertEmpty(
-            $input
+            $request
         );
 
         $fh = fopen($this -> tmpFile, 'a');
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 2,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 3,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 4,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 5,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 6,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
-        $input = $this -> target -> getInput();
+        $request = $this -> target -> getRequest();
         $this -> assertNotEmpty(
-            $input
+            $request
         );
         $this -> assertEquals(
             5,
-            count($input)
+            count($request)
         );
     }
 
@@ -194,7 +194,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
         $this -> target -> run();

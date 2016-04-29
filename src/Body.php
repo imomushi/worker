@@ -30,6 +30,8 @@ class Body
 
     public function dispatch($request)
     {
+        $target = $this -> create($request -> segment);
+        $target -> execute($request -> args);
         return true;
     }
 
