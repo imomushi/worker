@@ -1,7 +1,7 @@
-imomushi-worker
+imomushi/worker
 ===========
 
-[![Build Status](https://travis-ci.org/imomushi/imomushi-worker.png)](https://travis-ci.org/imomushi/imomushi-worker)
+[![Build Status](https://travis-ci.org/imomushi/worker.png)](https://travis-ci.org/imomushi/worker)
 
 ## Installation ##
 
