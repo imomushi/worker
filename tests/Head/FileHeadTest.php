@@ -11,6 +11,8 @@
 namespace Imomushi\Worker\Tests\Head;
 
 use Imomushi\Worker\Head\FileHead;
+use Imomushi\Worker\Tail\FileTail;
+use Imomushi\Worker\Body;
 
 /**
  * Class FileHeadTest
@@ -25,10 +27,15 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
      */
     private $target;
     private $tmpFile;
+    private $tmpTail;
+    private $tail;
     public function setUp()
     {
         $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
-        $this -> target = new FileHead($this -> tmpFile);
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
+
+        $this -> tail = new FileTail($this -> tmpTail);
+        $this -> target = new FileHead($this -> tmpFile, $this -> tail);
         $this -> target -> inTest = true;
 
     }
@@ -36,6 +43,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unlink($this -> tmpFile);
+        unlink($this -> tmpTail);
     }
 
     public function testConstruct()
@@ -89,7 +97,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $tmpFileHead = new FileHead($tmp);
+        $tmpFileHead = new FileHead($tmp, $this -> tail);
         $tmpFileHead -> open();
         $tmpFileHead -> changed();
 
@@ -97,7 +105,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'."\n"
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
 

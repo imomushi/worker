@@ -2,6 +2,9 @@
 <?php
 require __DIR__.'/../vendor/autoload.php';
 use Imomushi\Worker\Head\FileHead;
+use Imomushi\Worker\Tail\FileTail;
 
-$fileHead  = new FileHead("/tmp/input.txt");
+$fileHead  = new FileHead("/tmp/input.txt",
+    new FileTail("/tmp/output.txt")
+);
 $fileHead -> run();

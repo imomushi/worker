@@ -32,6 +32,8 @@ class EchoStdout
 
     public function execute($arguments)
     {
-        fprintf($this -> stdOut, "%s", var_export($arguments, true));
+        $args = var_export($arguments, true);
+        fprintf($this -> stdOut, "%s\n", $args);
+        return $args;
     }
 }
