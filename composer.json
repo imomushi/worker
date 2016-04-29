@@ -29,9 +29,6 @@
             "Imomushi\\Worker\\Tests\\": "tests/"
         }
     },
-    "config": {
-        "bin-dir": "bin"
-    },
     "bin":[
         "imomushi-worker"
     ],
