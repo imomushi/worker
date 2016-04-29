@@ -30,7 +30,7 @@
         }
     },
     "bin":[
-        "./bin/imomushi-worker"
+        "bin/imomushi-worker"
     ],
     "extra": {
         "branch-alias": {
@@ -40,3 +40,4 @@
     "minimum-stability": "dev",
     "prefer-stable": true
 }
+
