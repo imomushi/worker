@@ -57,16 +57,16 @@ class EchoStdoutTest extends \PHPUnit_Framework_TestCase
             '{"arg1": 1, "arg2": 2}'
         );
         $this -> target -> stdOut = fopen($this -> tmpStdOut, 'wb');
-        $this -> assertNull(
+        $this -> assertNotNull(
             $this -> target -> execute($arguments)
         );
         $actual = implode(PHP_EOL, array_map('trim', explode(PHP_EOL, file_get_contents($this -> tmpStdOut))));
 
         $this -> assertEquals(
-            "stdClass::__set_state(array(\n".
-            "'arg1' => 1,\n".
-            "'arg2' => 2,\n".
-            "))",
+            "stdClass::__set_state(array(".PHP_EOL.
+            "'arg1' => 1,".PHP_EOL.
+            "'arg2' => 2,".PHP_EOL.
+            "))".PHP_EOL,
             $actual
         );
     }

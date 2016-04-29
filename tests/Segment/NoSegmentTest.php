@@ -50,8 +50,9 @@ class NoSegmentTest extends \PHPUnit_Framework_TestCase
                 'execute'
             )
         );
-        $this -> assertNull(
-            $this -> target -> execute(null)
+        $this -> assertEquals(
+            $this -> target -> execute(null),
+            'Imomushi\Worker\Segment\NoSegment'
         );
     }
 }

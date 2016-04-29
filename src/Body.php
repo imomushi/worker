@@ -20,18 +20,22 @@ class Body
     /**
      * @var
      */
+    public $tail;
 
     /**
      * Constructer
      */
-    public function __construct()
+    public function __construct($tail)
     {
+        $this -> tail = $tail;
     }
 
     public function dispatch($request)
     {
         $segment = 'NoSegment';
         $args    = null;
+        $pipelineId = null;
+        $segmentId = null;
         if (is_object($request)) {
             if (property_exists($request, 'segment')) {
                 $segment = $request -> segment;
@@ -39,9 +43,16 @@ class Body
             if (property_exists($request, 'args')) {
                 $args = $request -> args;
             }
+            if (property_exists($request, 'pipeline_id')) {
+                $pipelineId = $request -> pipeline_id;
+            }
+            if (property_exists($request, 'segment_id')) {
+                $segmentId = $request -> segment_id;
+            }
         }
         $target = $this -> create($segment);
-        $target -> execute($args);
+        $result = $target -> execute($args);
+        $this -> tail -> respond($pipelineId, $segmentId, $result);
     }
 
     public function create($target)

@@ -24,14 +24,16 @@ class BodyTest extends \PHPUnit_Framework_TestCase
      * @vars
      */
     private $target;
+    private $tmpFile;
     public function setUp()
     {
-        $this -> target = new Body();
-
+        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.Body');
+        $this -> target = new Body(new \Imomushi\Worker\Tail\FileTail($this -> tmpFile));
     }
 
     public function tearDown()
     {
+        unlink($this -> tmpFile);
     }
 
     public function testConstruct()
@@ -39,6 +41,10 @@ class BodyTest extends \PHPUnit_Framework_TestCase
         $this -> assertInstanceOf(
             'Imomushi\Worker\Body',
             $this -> target
+        );
+        $this -> assertInstanceOf(
+            'Imomushi\Worker\Tail\FileTail',
+            $this -> target -> tail
         );
     }
 
