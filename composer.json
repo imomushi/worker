@@ -28,7 +28,7 @@
         "psr-4": {
             "Imomushi\\Worker\\Tests\\": "tests/"
         }
-    }
+    },
     "bin":[
         "imomushi-worker"
     ]
