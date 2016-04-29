@@ -24,14 +24,12 @@ class FileTailTest extends \PHPUnit_Framework_TestCase
      * @vars
      */
     private $target;
-    private $tmpFile;
     private $tmpTail;
-    private $tail;
     public function setUp()
     {
         $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Tail.FileTail');
 
-        $this -> tail = new FileTail($this -> tmpTail);
+        $this -> target = new FileTail($this -> tmpTail);
 
     }
 
@@ -56,8 +54,35 @@ class FileTailTest extends \PHPUnit_Framework_TestCase
                 'respond'
             )
         );
+        $pipelineId = "hoge";
+        $segmentId = 1;
+        $result = new \stdClass();
+        $result -> hotel = "Marumo";
+        $result -> tel   = "090-xxxx-yyyy";
         $this -> assertNull(
-            $this -> target -> respond()
+            $this -> target -> respond($pipelineId, $segmentId, $result)
+        );
+        $expectation = new \stdClass();
+        $expectation -> pipeline_id = $pipelineId;
+        $expectation -> segment_id = $segmentId;
+        $expectation -> result = $result;
+
+        $actual = array_filter(array_map('json_decode', explode(PHP_EOL, file_get_contents($this -> tmpTail))));
+        $this -> assertEquals(
+            1,
+            count($actual)
+        );
+        $this -> assertEquals(
+            $expectation,
+            $actual[0]
+        );
+
+        $this -> target -> respond(2, 2, $result);
+        $this -> target -> respond(3, 3, $result);
+        $actual = array_filter(array_map('json_decode', explode(PHP_EOL, file_get_contents($this -> tmpTail))));
+        $this -> assertEquals(
+            3,
+            count($actual)
         );
     }
 }

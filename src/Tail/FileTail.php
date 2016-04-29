@@ -10,8 +10,6 @@
 
 namespace Imomushi\Worker\Tail;
 
-use Imomushi\Worker\Body;
-
 /**
  * Class FileTail
  *
@@ -35,7 +33,14 @@ class FileTail
         $this -> file = $file;
     }
 
-    public function respond()
+    public function respond($pipelineId, $segmentId, $result)
     {
+        $response = new \stdClass();
+        $response -> pipeline_id = $pipelineId;
+        $response -> segment_id = $segmentId;
+        $response -> result  = $result;
+        $fh = fopen($this -> file, "a");
+        fprintf($fh, "%s".PHP_EOL, json_encode($response));
+        fclose($fh);
     }
 }
