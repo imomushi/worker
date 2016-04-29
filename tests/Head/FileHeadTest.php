@@ -23,13 +23,13 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     /*
      * @vars
      */
-    private $fileHead;
+    private $target;
     private $tmpFile;
     public function setUp()
     {
         $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $this -> fileHead = new FileHead($this -> tmpFile);
-        $this -> fileHead -> inTest = true;
+        $this -> target = new FileHead($this -> tmpFile);
+        $this -> target -> inTest = true;
 
     }
 
@@ -42,7 +42,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertInstanceOf(
             'Imomushi\Worker\Head\FileHead',
-            $this -> fileHead
+            $this -> target
         );
     }
 
@@ -50,12 +50,12 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileHead,
+                $this -> target,
                 'open'
             )
         );
         $this -> assertTrue(
-            $this -> fileHead -> open()
+            $this -> target -> open()
         );
     }
 
@@ -63,14 +63,14 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileHead,
+                $this -> target,
                 'close'
             )
         );
 
-        $this -> fileHead -> open();
+        $this -> target -> open();
         $this -> assertTrue(
-            $this -> fileHead -> close()
+            $this -> target -> close()
         );
     }
 
@@ -78,14 +78,14 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileHead,
+                $this -> target,
                 'changed'
             )
         );
 
-        $this -> fileHead -> open();
+        $this -> target -> open();
         $this -> assertFalse(
-            $this -> fileHead -> changed()
+            $this -> target -> changed()
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
@@ -113,11 +113,11 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileHead,
+                $this -> target,
                 'getInput'
             )
         );
-        $input = $this -> fileHead -> getInput();
+        $input = $this -> target -> getInput();
         $this -> assertEmpty(
             $input
         );
@@ -130,7 +130,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
         fclose($fh);
 
-        $input = $this -> fileHead -> getInput();
+        $input = $this -> target -> getInput();
         $this -> assertNotEmpty(
             $input
         );
@@ -139,7 +139,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             count($input)
         );
 
-        $input = $this -> fileHead -> getInput();
+        $input = $this -> target -> getInput();
         $this -> assertEmpty(
             $input
         );
@@ -171,7 +171,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
-        $input = $this -> fileHead -> getInput();
+        $input = $this -> target -> getInput();
         $this -> assertNotEmpty(
             $input
         );
@@ -185,7 +185,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> fileHead,
+                $this -> target,
                 'run'
             )
         );
@@ -197,6 +197,6 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             '"function":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
-        $this -> fileHead -> run();
+        $this -> target -> run();
     }
 }

@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker;
+namespace Imomushi\Worker\Segment;
 
 /**
- * Class Body
+ * Class EchoStdout
  *
  * @package Imomushi\Worker
  */
-class Body
+class EchoStdout
 {
     /**
      * @var
@@ -26,10 +26,5 @@ class Body
      */
     public function __construct()
     {
-    }
-
-    public function dispatch($request)
-    {
-        return true;
     }
 }

@@ -23,10 +23,10 @@ class BodyTest extends \PHPUnit_Framework_TestCase
     /*
      * @vars
      */
-    private $body;
+    private $target;
     public function setUp()
     {
-        $this -> body = new Body();
+        $this -> target = new Body();
 
     }
 
@@ -38,7 +38,7 @@ class BodyTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertInstanceOf(
             'Imomushi\Worker\Body',
-            $this -> body
+            $this -> target
         );
     }
 
@@ -46,12 +46,16 @@ class BodyTest extends \PHPUnit_Framework_TestCase
     {
         $this -> assertTrue(
             method_exists(
-                $this -> body,
+                $this -> target,
                 'dispatch'
             )
         );
+        $request = json_decode(
+            '{"pipeline_id": "hogehoge", "segment_id": 2,'.
+            '"function":"Echo", "args": {"arg1": 1, "arg2": 2}}'
+        );
         $this -> assertTrue(
-            $this -> body -> dispatch()
+            $this -> target -> dispatch($request)
         );
     }
 }
