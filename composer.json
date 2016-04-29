@@ -4,7 +4,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Fumikazu FUjiwara",
+            "name": "Fumikazu Fujiwara",
             "email": "github@ze.gs"
         }
     ],
@@ -29,7 +29,17 @@
             "Imomushi\\Worker\\Tests\\": "tests/"
         }
     },
+    "config": {
+        "bin-dir": "bin"
+    },
     "bin":[
         "imomushi-worker"
-    ]
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.1-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
