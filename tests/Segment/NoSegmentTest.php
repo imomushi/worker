@@ -41,4 +41,17 @@ class NoSegmentTest extends \PHPUnit_Framework_TestCase
             $this -> target
         );
     }
+
+    public function testExecute()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> target,
+                'execute'
+            )
+        );
+        $this -> assertNull(
+            $this -> target -> execute(null)
+        );
+    }
 }

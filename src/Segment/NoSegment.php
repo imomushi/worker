@@ -27,4 +27,8 @@ class NoSegment
     public function __construct()
     {
     }
+
+    public function execute($arguments)
+    {
+    }
 }

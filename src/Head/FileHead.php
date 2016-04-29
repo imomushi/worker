@@ -85,7 +85,6 @@ class FileHead
     public function run()
     {
         do {
-            $requests = $this ->getRequest();
             foreach ($this -> getRequest() as $request) {
                 $this -> body -> dispatch($request);
             }

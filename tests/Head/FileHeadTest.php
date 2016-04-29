@@ -27,7 +27,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     private $tmpFile;
     public function setUp()
     {
-        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.');
+        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
         $this -> target = new FileHead($this -> tmpFile);
         $this -> target -> inTest = true;
 
@@ -97,7 +97,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            ' function":"func1", "args": {"arg1": 1, "arg2": 2}}'."\n"
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'."\n"
         );
         fclose($fh);
 
@@ -126,7 +126,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
 
@@ -148,27 +148,27 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 2,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 3,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 4,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 5,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 6,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
         $request = $this -> target -> getRequest();
@@ -194,7 +194,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
-            '"segment":"func1", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
         $this -> target -> run();

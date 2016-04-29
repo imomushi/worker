@@ -30,9 +30,18 @@ class Body
 
     public function dispatch($request)
     {
-        $target = $this -> create($request -> segment);
-        $target -> execute($request -> args);
-        return true;
+        $segment = 'NoSegment';
+        $args    = null;
+        if (is_object($request)) {
+            if (property_exists($request, 'segment')) {
+                $segment = $request -> segment;
+            }
+            if (property_exists($request, 'args')) {
+                $args = $request -> args;
+            }
+        }
+        $target = $this -> create($segment);
+        $target -> execute($args);
     }
 
     public function create($target)
