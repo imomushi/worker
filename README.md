@@ -9,9 +9,6 @@ To install via [Composer](http://getcomposer.org/), use the command below, it wi
 
 ```
 composer require imomushi/worker:dev-master
-cd vendor/imomushi/worker/
-make
-cd -
 ./vendor/bin/imomushi-worker 
 ```
 
