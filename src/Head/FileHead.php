@@ -10,6 +10,8 @@
 
 namespace Imomushi\Worker\Head;
 
+use Imomushi\Worker\Body;
+
 /**
  * Class FileHead
  *

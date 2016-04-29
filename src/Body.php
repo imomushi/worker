@@ -27,4 +27,9 @@ class Body
     public function __construct()
     {
     }
+
+    public function dispatch()
+    {
+        return true;
+    }
 }

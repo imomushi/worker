@@ -41,4 +41,17 @@ class BodyTest extends \PHPUnit_Framework_TestCase
             $this -> body
         );
     }
+
+    public function testDispatch()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> body,
+                'dispatch'
+            )
+        );
+        $this -> assertTrue(
+            $this -> body -> dispatch()
+        );
+    }
 }
