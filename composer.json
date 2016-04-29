@@ -2,6 +2,7 @@
     "name": "imomushi/worker",
     "description": "Pluggable Pipeline Woeker in PHP",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Fumikazu Fujiwara",
