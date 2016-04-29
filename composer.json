@@ -30,7 +30,7 @@
         }
     },
     "bin":[
-        "imomushi-worker"
+        "./bin/imomushi-worker"
     ],
     "extra": {
         "branch-alias": {
