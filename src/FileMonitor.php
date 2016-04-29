@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of Worker.
  *
@@ -13,30 +12,67 @@ namespace Imomushi\Worker;
 
 /**
  * Class FileMonitor
+ *
  * @package Imomushi\Worker
  */
 class FileMonitor
 {
-
     /**
-     * Current version of Worker
+     * @var
      */
-    const VERSION = '0.0.1-DEV';
-
-    /**
-     * Collection of Plugins in use (PluginInterface)
-     *
-     * @var \SplObjectStorage
-     */
-    private $plugins;
+    private $file;
+    private $fh;
+    private $size = 0;
+    private $currentSize = 0;
 
     /**
      * Constructer
      */
-    public function __construct()
+    public function __construct($file)
     {
-        if (false === strpos(PHP_VERSION, 'hiphop')) {
-            gc_enable();
+        $this -> file = $file;
+    }
+
+    public function open()
+    {
+        return false != (
+            $this -> fh = fopen($this -> file, 'r')
+        );
+    }
+
+    public function close()
+    {
+        return fclose($this -> fh);
+    }
+
+    public function changed()
+    {
+        $size = $this -> size;
+
+        clearstatcache();
+        $fstat = fstat($this ->fh);
+        $this -> currentSize = $fstat['size'];
+
+        return $this -> size != $this -> currentSize;
+    }
+
+    public function getInput()
+    {
+        $this -> open();
+        $lines = array();
+        if ($this -> changed()) {
+            fseek($this -> fh, $this -> size);
+            $data = "";
+            while ($d = fgets($this -> fh)) {
+                $data .= $d;
+            }
+            $lines = array_map(
+                'json_decode',
+                array_filter(split(PHP_EOL, $data))
+            );
+            $this -> size = $this -> currentSize;
         }
+        $this -> close();
+        return $lines;
     }
 }
