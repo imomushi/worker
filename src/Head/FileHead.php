@@ -8,14 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker;
+namespace Imomushi\Worker\Head;
+
+use Imomushi\Worker\Body;
 
 /**
- * Class FileMonitor
+ * Class FileHead
  *
  * @package Imomushi\Worker
  */
-class FileMonitor
+class FileHead
 {
     /**
      * @var
@@ -23,7 +25,10 @@ class FileMonitor
     private $file;
     private $fh;
     private $size = 0;
+    private $body;
     private $currentSize = 0;
+
+    public $inTest = false;
 
     /**
      * Constructer
@@ -31,6 +36,7 @@ class FileMonitor
     public function __construct($file)
     {
         $this -> file = $file;
+        $this -> body = new Body();
     }
 
     public function open()
@@ -56,7 +62,7 @@ class FileMonitor
         return $this -> size != $this -> currentSize;
     }
 
-    public function getInput()
+    public function getRequest()
     {
         $this -> open();
         $lines = array();
@@ -74,5 +80,14 @@ class FileMonitor
         }
         $this -> close();
         return $lines;
+    }
+
+    public function run()
+    {
+        do {
+            foreach ($this -> getRequest() as $request) {
+                $this -> body -> dispatch($request);
+            }
+        } while (!$this -> inTest);
     }
 }
