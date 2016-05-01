@@ -19,9 +19,6 @@ if (!class_exists('Imomushi\Worker\Body', true)) {
     }
 }
 use Imomushi\Worker\Head\FileHead;
-use Imomushi\Worker\Tail\FileTail;
 
-$fileHead  = new FileHead("/tmp/input.txt",
-    new FileTail("/tmp/output.txt")
-);
+$fileHead  = new FileHead();
 $fileHead -> run();

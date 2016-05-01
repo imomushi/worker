@@ -89,6 +89,7 @@ class FileHead
 
         clearstatcache();
         $fstat = fstat($this ->fh);
+
         $this -> currentSize = $fstat['size'];
 
         return $this -> size != $this -> currentSize;
@@ -118,6 +119,6 @@ class FileHead
         $log = new \stdClass();
         $log -> input = $this -> input;
         $log -> size = $this -> size;
-        file_put_contents($this-> log, json_encode($log).PHP_EOL, FILE_APPEND | LOCK_EX);
+        file_put_contents($this-> log, json_encode($log).PHP_EOL, LOCK_EX);
     }
 }

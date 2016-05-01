@@ -60,6 +60,20 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             'Imomushi\Worker\Head\FileHead',
             $this -> target
         );
+        $default = new FileHeadExtend();
+        $this -> assertEquals(
+            '/tmp/input.txt',
+            $default -> input()
+        );
+        $this -> assertEquals(
+            '/tmp/imomushi.worker.head.file_head.log',
+            $default -> log()
+        );
+        $body =    $default -> body();
+        $this -> assertInstanceOf(
+            'Imomushi\Worker\Tail\FileTail',
+            $body -> tail
+        );
     }
 
     public function testOpen()
@@ -223,11 +237,11 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
                 'log'
             )
         );
-
-        $fh = fopen($this -> tmpInput, 'w');
         $input =
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
             '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL;
+
+        $fh = fopen($this -> tmpInput, 'w');
         fwrite(
             $fh,
             $input
@@ -245,6 +259,26 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         $this -> assertEquals(
             $log -> size,
             strlen($input)
+        );
+
+        $fh = fopen($this -> tmpInput, 'a');
+        fwrite(
+            $fh,
+            $input
+        );
+        fclose($fh);
+        $this -> target -> run();
+        $log = json_decode(file_get_contents($this -> tmpLog));
+        $this -> assertNotNull(
+            $log
+        );
+        $this -> assertEquals(
+            $log -> input,
+            $this -> tmpInput
+        );
+        $this -> assertEquals(
+            $log -> size,
+            strlen($input) * 2
         );
     }
 }
