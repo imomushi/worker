@@ -11,17 +11,17 @@
 namespace Imomushi\Worker\Tests\Head;
 
 use Imomushi\Worker\Tail\FileTail;
-use Imomushi\Worker\Tests\Head\FileHeadExtend;
+use Imomushi\Worker\Tests\Head\FileExtend;
 use Imomushi\Worker\Body;
 
 /**
- * Class FileHeadTest
+ * Class FileTest
  *
  * @package Imomushi\Worker\Tests\Head
  */
 
 
-class FileHeadTest extends \PHPUnit_Framework_TestCase
+class FileTest extends \PHPUnit_Framework_TestCase
 {
     /*
      * @vars
@@ -38,7 +38,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log.');
 
         $this -> tail = new FileTail($this -> tmpTail);
-        $this -> target = new FileHeadExtend([
+        $this -> target = new FileExtend([
             'input' => $this -> tmpInput,
             'tail'  => $this -> tail,
             'log'   => $this -> tmpLog
@@ -57,7 +57,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $this -> assertInstanceOf(
-            'Imomushi\Worker\Head\FileHead',
+            'Imomushi\Worker\Head\File',
             $this -> target
         );
         $this -> assertEquals(
@@ -74,7 +74,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $body -> tail
         );
         //default cases;
-        $default = new FileHeadExtend();
+        $default = new FileExtend();
         $this -> assertEquals(
             '/tmp/input.txt',
             $default -> input()
@@ -133,7 +133,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $tmpInputHead = new FileHeadExtend(['input' => $tmp, 'tail' => $this -> tail]);
+        $tmpInputHead = new FileExtend(['input' => $tmp, 'tail' => $this -> tail]);
         $tmpInputHead -> open();
         $tmpInputHead -> changed();
 

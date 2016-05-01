@@ -13,11 +13,11 @@ use Imomushi\Worker\Body;
 use Imomushi\Worker\Tail\FileTail;
 
 /**
- * Class FileHead
+ * Class File
  *
  * @package Imomushi\Worker
  */
-class FileHead
+class File
 {
     /**
      * @var
