@@ -56,9 +56,9 @@ class FileHeadExtend extends FileHead
     {
         return parent::changed();
     }
-    public function once()
+    public function stop()
     {
-        $this -> once = true;
+        $this -> stop = true;
     }
     public function getRequest()
     {

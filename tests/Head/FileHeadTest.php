@@ -33,9 +33,9 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
     private $tail;
     public function setUp()
     {
-        $this -> tmpInput = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.input');
-        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.tail');
-        $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log');
+        $this -> tmpInput = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.input.');
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.tail.');
+        $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log.');
 
         $this -> tail = new FileTail($this -> tmpTail);
         $this -> target = new FileHeadExtend([
@@ -43,7 +43,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             'tail'  => $this -> tail,
             'log'   => $this -> tmpLog
         ]);
-        $this -> target -> once();
+        $this -> target -> stop();
 
     }
 

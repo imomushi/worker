@@ -29,7 +29,7 @@ class FileHead
     protected $size = 0;
     protected $body;
     protected $currentSize = 0;
-    protected $once = false;
+    protected $stop = false;
 
     /**
      * Constructer
@@ -37,12 +37,10 @@ class FileHead
     public function __construct($config = array())
     {
         $this -> input = isset($config['input']) ?
-            $config['input'] :
-            '/tmp/input.txt';
+            $config['input'] : '/tmp/input.txt';
 
         $this -> log = isset($config['log']) ?
-            $config['log'] :
-            '/tmp/imomushi.worker.head.file_head.log';
+            $config['log'] : '/tmp/imomushi.worker.head.file_head.log';
 
         $this -> body = new Body(
             isset($config['tail']) ?
@@ -60,7 +58,7 @@ class FileHead
             foreach ($this -> getRequest() as $request) {
                 $this -> body -> dispatch($request);
             }
-        } while (!$this -> once);
+        } while (!$this -> stop);
     }
 
     /**
