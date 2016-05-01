@@ -57,8 +57,12 @@ class FileHead
     public function run()
     {
         do {
-            foreach ($this -> getRequest() as $request) {
-                $this -> body -> dispatch($request);
+            $requests = $this -> getRequest();
+            if (is_array($requests) && 0 != count($requests)) {
+                foreach ($requests as $request) {
+                    $this -> body -> dispatch($request);
+                }
+                $this -> logWrite();
             }
         } while (!$this -> once);
     }
@@ -108,5 +112,12 @@ class FileHead
         }
         $this -> close();
         return $lines;
+    }
+    protected function logWrite()
+    {
+        $log = new \stdClass();
+        $log -> input = $this -> input;
+        $log -> size = $this -> size;
+        file_put_contents($this-> log, json_encode($log).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 }

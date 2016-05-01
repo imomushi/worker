@@ -64,4 +64,8 @@ class FileHeadExtend extends FileHead
     {
         return parent::getRequest();
     }
+    public function logWrite()
+    {
+        return parent::logWrite();
+    }
 }

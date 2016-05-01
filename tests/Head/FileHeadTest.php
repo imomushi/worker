@@ -27,18 +27,21 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
      * @vars
      */
     private $target;
-    private $tmpFile;
+    private $tmpInput;
     private $tmpTail;
+    private $tmpLog;
     private $tail;
     public function setUp()
     {
-        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
-        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
+        $this -> tmpInput = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.input');
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.tail');
+        $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log');
 
         $this -> tail = new FileTail($this -> tmpTail);
         $this -> target = new FileHeadExtend([
-            'input' => $this -> tmpFile,
-            'tail'  => $this -> tail
+            'input' => $this -> tmpInput,
+            'tail'  => $this -> tail,
+            'log'   => $this -> tmpLog
         ]);
         $this -> target -> once();
 
@@ -46,8 +49,9 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        unlink($this -> tmpFile);
+        unlink($this -> tmpInput);
         unlink($this -> tmpTail);
+        unlink($this -> tmpLog);
     }
 
     public function testConstruct()
@@ -101,9 +105,9 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $tmpFileHead = new FileHeadExtend(['input' => $tmp, 'tail' => $this -> tail]);
-        $tmpFileHead -> open();
-        $tmpFileHead -> changed();
+        $tmpInputHead = new FileHeadExtend(['input' => $tmp, 'tail' => $this -> tail]);
+        $tmpInputHead -> open();
+        $tmpInputHead -> changed();
 
         $fh = fopen($tmp, 'w');
         fwrite(
@@ -114,10 +118,10 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fclose($fh);
 
         $this -> assertTrue(
-            $tmpFileHead -> changed()
+            $tmpInputHead -> changed()
         );
 
-        $tmpFileHead -> close();
+        $tmpInputHead -> close();
         unlink($tmp);
     }
 
@@ -134,7 +138,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $request
         );
 
-        $fh = fopen($this -> tmpFile, 'w');
+        $fh = fopen($this -> tmpInput, 'w');
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
@@ -156,7 +160,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $request
         );
 
-        $fh = fopen($this -> tmpFile, 'a');
+        $fh = fopen($this -> tmpInput, 'a');
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 2,'.
@@ -202,7 +206,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $fh = fopen($this -> tmpFile, 'w');
+        $fh = fopen($this -> tmpInput, 'w');
         fwrite(
             $fh,
             '{"pipeline_id": "hogehoge", "segment_id": 1,'.
@@ -210,5 +214,37 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
         fclose($fh);
         $this -> target -> run();
+    }
+    public function testLog()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> target,
+                'log'
+            )
+        );
+
+        $fh = fopen($this -> tmpInput, 'w');
+        $input =
+            '{"pipeline_id": "hogehoge", "segment_id": 1,'.
+            '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL;
+        fwrite(
+            $fh,
+            $input
+        );
+        fclose($fh);
+        $this -> target -> run();
+        $log = json_decode(file_get_contents($this -> tmpLog));
+        $this -> assertNotNull(
+            $log
+        );
+        $this -> assertEquals(
+            $log -> input,
+            $this -> tmpInput
+        );
+        $this -> assertEquals(
+            $log -> size,
+            strlen($input)
+        );
     }
 }
