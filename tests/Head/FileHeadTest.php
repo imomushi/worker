@@ -10,15 +10,16 @@
 
 namespace Imomushi\Worker\Tests\Head;
 
-use Imomushi\Worker\Head\FileHead;
 use Imomushi\Worker\Tail\FileTail;
+use Imomushi\Worker\Tests\Head\FileHeadExtend;
 use Imomushi\Worker\Body;
 
 /**
  * Class FileHeadTest
  *
- * @package Imomushi\Worker\Tests
+ * @package Imomushi\Worker\Tests\Head
  */
+
 
 class FileHeadTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,8 +36,11 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Head.FileHead');
 
         $this -> tail = new FileTail($this -> tmpTail);
-        $this -> target = new FileHead($this -> tmpFile, $this -> tail);
-        $this -> target -> inTest = true;
+        $this -> target = new FileHeadExtend([
+            'input' => $this -> tmpFile,
+            'tail'  => $this -> tail
+        ]);
+        $this -> target -> once();
 
     }
 
@@ -97,7 +101,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
-        $tmpFileHead = new FileHead($tmp, $this -> tail);
+        $tmpFileHead = new FileHeadExtend(['input' => $tmp, 'tail' => $this -> tail]);
         $tmpFileHead -> open();
         $tmpFileHead -> changed();
 
