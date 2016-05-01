@@ -10,7 +10,6 @@
 namespace Imomushi\Worker\Head;
 
 use Imomushi\Worker\Body;
-use Imomushi\Worker\Tail\FileTail;
 
 /**
  * Class File
@@ -44,7 +43,7 @@ class File
         $this -> body = new Body(
             isset($config['tail']) ?
             $config['tail'] :
-            new FileTail('/tmp/output.txt')
+            new \Imomushi\Worker\Tail\File('/tmp/output.txt')
         );
         $this -> sizeSetFromLog();
     }

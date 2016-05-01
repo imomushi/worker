@@ -10,15 +10,15 @@
 
 namespace Imomushi\Worker\Tests\Tail;
 
-use Imomushi\Worker\Tail\FileTail;
+use Imomushi\Worker\Tail\File;
 
 /**
- * Class FileTailTest
+ * Class FileTest
  *
  * @package Imomushi\Worker\Tests
  */
 
-class FileTailTest extends \PHPUnit_Framework_TestCase
+class FileTest extends \PHPUnit_Framework_TestCase
 {
     /*
      * @vars
@@ -27,9 +27,9 @@ class FileTailTest extends \PHPUnit_Framework_TestCase
     private $tmpTail;
     public function setUp()
     {
-        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Tail.FileTail');
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Tail.File');
 
-        $this -> target = new FileTail($this -> tmpTail);
+        $this -> target = new File($this -> tmpTail);
 
     }
 
@@ -41,7 +41,7 @@ class FileTailTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $this -> assertInstanceOf(
-            'Imomushi\Worker\Tail\FileTail',
+            'Imomushi\Worker\Tail\File',
             $this -> target
         );
     }

@@ -18,7 +18,7 @@ if (!class_exists('Imomushi\Worker\Body', true)) {
         exit(1);
     }
 }
-use Imomushi\Worker\Head\FileHead;
+use Imomushi\Worker\Head\File;
 
-$fileHead  = new FileHead();
+$fileHead  = new File();
 $fileHead -> run();

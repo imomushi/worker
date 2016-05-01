@@ -11,11 +11,11 @@
 namespace Imomushi\Worker\Tail;
 
 /**
- * Class FileTail
+ * Class File
  *
  * @package Imomushi\Worker
  */
-class FileTail
+class File
 {
     /**
      * @var

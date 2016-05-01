@@ -10,7 +10,7 @@
 
 namespace Imomushi\Worker\Tests\Head;
 
-use Imomushi\Worker\Tail\FileTail;
+use Imomushi\Worker\Tail\File;
 use Imomushi\Worker\Tests\Head\FileExtend;
 use Imomushi\Worker\Body;
 
@@ -37,7 +37,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.tail.');
         $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log.');
 
-        $this -> tail = new FileTail($this -> tmpTail);
+        $this -> tail = new File($this -> tmpTail);
         $this -> target = new FileExtend([
             'input' => $this -> tmpInput,
             'tail'  => $this -> tail,
@@ -70,7 +70,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
         $body =    $this -> target -> body();
         $this -> assertInstanceOf(
-            'Imomushi\Worker\Tail\FileTail',
+            'Imomushi\Worker\Tail\File',
             $body -> tail
         );
         //default cases;
@@ -85,7 +85,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
         $body =    $default -> body();
         $this -> assertInstanceOf(
-            'Imomushi\Worker\Tail\FileTail',
+            'Imomushi\Worker\Tail\File',
             $body -> tail
         );
     }
