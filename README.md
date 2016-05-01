@@ -2,6 +2,8 @@ imomushi/worker
 ===========
 
 [![Build Status](https://travis-ci.org/imomushi/worker.png)](https://travis-ci.org/imomushi/worker)
+[![Latest Stable Version](https://poser.pugx.org/imomushi/worker/v/stable.svg)](https://packagist.org/packages/imomushi/worker)
+[![License](https://poser.pugx.org/imomushi/worker/license.svg)](https://packagist.org/packages/imomushi/worker)
 
 ## Installation ##
 
