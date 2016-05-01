@@ -1,5 +1,4 @@
-<?php
-/*
+<?php /*
  * This file is part of Worker.
  *
  ** (c) 2016 -  Fumikazu FUjiwara
@@ -47,6 +46,7 @@ class FileHead
             $config['tail'] :
             new FileTail('/tmp/output.txt')
         );
+        $this -> sizeSetFromLog();
     }
 
     /**
@@ -79,10 +79,8 @@ class FileHead
 
     protected function changed()
     {
-        $size = $this -> size;
-
         clearstatcache();
-        $fstat = fstat($this ->fh);
+        $fstat = fstat($this -> fh);
 
         $this -> currentSize = $fstat['size'];
 
@@ -109,11 +107,27 @@ class FileHead
         $this -> close();
         return $lines;
     }
+
     protected function logWrite()
     {
         $log = new \stdClass();
         $log -> input = $this -> input;
         $log -> size = $this -> size;
         file_put_contents($this-> log, json_encode($log).PHP_EOL, LOCK_EX);
+    }
+
+    protected function sizeSetFromLog()
+    {
+        $log = json_decode(@file_get_contents($this -> log));
+        if (is_object($log)) {
+            if (property_exists($log, 'input') &&
+                $this -> input == $log -> input &&
+                property_exists($log, 'size') &&
+                is_integer($log -> size) &&
+                0 < $log -> size
+            ) {
+                $this -> size = $log -> size;
+            }
+        }
     }
 }

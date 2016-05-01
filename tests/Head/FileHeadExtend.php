@@ -36,9 +36,9 @@ class FileHeadExtend extends FileHead
     {
         return $this -> body;
     }
-    public function size()
+    public function size($size = null)
     {
-        return $this -> size;
+        return $this -> size = is_null($size) ? $this -> size : $size;
     }
     public function currentSize()
     {
@@ -67,5 +67,9 @@ class FileHeadExtend extends FileHead
     public function logWrite()
     {
         return parent::logWrite();
+    }
+    public function sizeSetFromLog()
+    {
+        return parent::sizeSetFromLog();
     }
 }

@@ -60,6 +60,20 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             'Imomushi\Worker\Head\FileHead',
             $this -> target
         );
+        $this -> assertEquals(
+            $this -> tmpInput,
+            $this -> target -> input()
+        );
+        $this -> assertEquals(
+            $this -> tmpLog,
+            $this -> target -> log()
+        );
+        $body =    $this -> target -> body();
+        $this -> assertInstanceOf(
+            'Imomushi\Worker\Tail\FileTail',
+            $body -> tail
+        );
+        //default cases;
         $default = new FileHeadExtend();
         $this -> assertEquals(
             '/tmp/input.txt',
@@ -229,12 +243,12 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
         fclose($fh);
         $this -> target -> run();
     }
-    public function testLog()
+    public function testLogWrite()
     {
         $this -> assertTrue(
             method_exists(
                 $this -> target,
-                'log'
+                'logWrite'
             )
         );
         $input =
@@ -280,5 +294,65 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $log -> size,
             strlen($input) * 2
         );
+    }
+    public function testSizeSetFromLog()
+    {
+        $this -> assertTrue(
+            method_exists(
+                $this -> target,
+                'sizeSetFromLog'
+            )
+        );
+        //backup
+        $size = $this -> target -> size();
+        $backupTmpLog = file_get_contents($this -> tmpLog);
+
+        //normal case
+        $tmpData = new \stdClass();
+        $tmpData -> input = $this -> tmpInput;
+        $tmpData -> size = 1979;
+
+        file_put_contents($this -> tmpLog, json_encode($tmpData), LOCK_EX);
+        $this -> target -> sizeSetFromLog();
+        $this -> assertEquals(
+            1979,
+            $this -> target -> size()
+        );
+
+        //invalid input case
+        $this -> target -> size($size);
+        $tmpData -> input = "INVALID";
+
+        file_put_contents($this -> tmpLog, json_encode($tmpData), LOCK_EX);
+        $this -> target -> sizeSetFromLog();
+        $this -> assertEquals(
+            $size,
+            $this -> target -> size()
+        );
+
+        //invalid size cases
+        $this -> target -> size($size);
+        $tmpData -> input = $this -> tmpInput;
+        $tmpData -> size = "INVALID";
+
+        file_put_contents($this -> tmpLog, json_encode($tmpData), LOCK_EX);
+        $this -> target -> sizeSetFromLog();
+        $this -> assertEquals(
+            $size,
+            $this -> target -> size()
+        );
+
+        $this -> target -> size($size);
+        $tmpData -> size = -1;
+
+        file_put_contents($this -> tmpLog, json_encode($tmpData), LOCK_EX);
+        $this -> target -> sizeSetFromLog();
+        $this -> assertEquals(
+            $size,
+            $this -> target -> size()
+        );
+
+        file_put_contents($this -> tmpLog, $backupTmpLog);
+        $this -> target -> size($size);
     }
 }
