@@ -57,12 +57,8 @@ class FileHead
     public function run()
     {
         do {
-            $requests = $this -> getRequest();
-            if (is_array($requests) && 0 != count($requests)) {
-                foreach ($requests as $request) {
-                    $this -> body -> dispatch($request);
-                }
-                $this -> logWrite();
+            foreach ($this -> getRequest() as $request) {
+                $this -> body -> dispatch($request);
             }
         } while (!$this -> once);
     }
@@ -110,6 +106,7 @@ class FileHead
                 array_filter(explode(PHP_EOL, $data))
             );
             $this -> size = $this -> currentSize;
+            $this -> logWrite();
         }
         $this -> close();
         return $lines;

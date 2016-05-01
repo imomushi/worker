@@ -247,7 +247,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $input
         );
         fclose($fh);
-        $this -> target -> run();
+        $this -> target -> getRequest();
         $log = json_decode(file_get_contents($this -> tmpLog));
         $this -> assertNotNull(
             $log
@@ -267,7 +267,7 @@ class FileHeadTest extends \PHPUnit_Framework_TestCase
             $input
         );
         fclose($fh);
-        $this -> target -> run();
+        $this -> target -> getRequest();
         $log = json_decode(file_get_contents($this -> tmpLog));
         $this -> assertNotNull(
             $log
