@@ -11,8 +11,8 @@
 namespace Imomushi\Worker\Tests\Head;
 
 use Imomushi\Worker\Tail\File;
-use Imomushi\Worker\Tests\Head\FileExtend;
 use Imomushi\Worker\Body;
+use Imomushi\Worker\Tests\Head\FileExtend;
 
 /**
  * Class FileTest

@@ -10,15 +10,13 @@
 
 namespace Imomushi\Worker\Tests\Head;
 
-use Imomushi\Worker\Head\File;
-
 /**
- * Class FileTest
+ * Class FileExtend
  *
  * @package Imomushi\Worker\Tests\Head
  */
 
-class FileExtend extends File
+class FileExtend extends \Imomushi\Worker\Head\File
 {
     public function input()
     {

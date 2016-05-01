@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="ImomushiWorker Test Suite">
+        <testsuite name="imomushi/worker Test Suite">
             <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>

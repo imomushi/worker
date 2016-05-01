@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests;
+namespace Imomushi\Worker\Tests\Segment;
 
 use Imomushi\Worker\Segment\NoSegment;
 

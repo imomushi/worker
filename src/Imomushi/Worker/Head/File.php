@@ -1,4 +1,5 @@
-<?php /*
+<?php
+/*
  * This file is part of Worker.
  *
  ** (c) 2016 -  Fumikazu FUjiwara
