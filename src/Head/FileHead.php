@@ -1,5 +1,4 @@
-<?php
-/*
+<?php /*
  * This file is part of Worker.
  *
  ** (c) 2016 -  Fumikazu FUjiwara
@@ -11,6 +10,7 @@
 namespace Imomushi\Worker\Head;
 
 use Imomushi\Worker\Body;
+use Imomushi\Worker\Tail\FileTail;
 
 /**
  * Class FileHead
@@ -22,47 +22,72 @@ class FileHead
     /**
      * @var
      */
-    private $file;
-    private $fh;
-    private $size = 0;
-    private $body;
-    private $currentSize = 0;
-
-    public $inTest = false;
+    protected $input;
+    protected $log;
+    protected $fh;
+    protected $size = 0;
+    protected $body;
+    protected $currentSize = 0;
+    protected $stop = false;
 
     /**
      * Constructer
      */
-    public function __construct($file, $tail)
+    public function __construct($config = array())
     {
-        $this -> file = $file;
-        $this -> body = new Body($tail);
+        $this -> input = isset($config['input']) ?
+            $config['input'] : '/tmp/input.txt';
+
+        $this -> log = isset($config['log']) ?
+            $config['log'] : '/tmp/imomushi.worker.head.file_head.log';
+
+        $this -> body = new Body(
+            isset($config['tail']) ?
+            $config['tail'] :
+            new FileTail('/tmp/output.txt')
+        );
+        $this -> sizeSetFromLog();
     }
 
-    public function open()
+    /**
+     * main function
+     */
+    public function run()
+    {
+        do {
+            foreach ($this -> getRequest() as $request) {
+                $this -> body -> dispatch($request);
+            }
+        } while (!$this -> stop);
+    }
+
+    /**
+     * protected functions
+     */
+
+    protected function open()
     {
         return false != (
-            $this -> fh = fopen($this -> file, 'r')
+            $this -> fh = fopen($this -> input, 'r')
         );
     }
 
-    public function close()
+    protected function close()
     {
         return fclose($this -> fh);
     }
 
-    public function changed()
+    protected function changed()
     {
-        $size = $this -> size;
-
         clearstatcache();
-        $fstat = fstat($this ->fh);
+        $fstat = fstat($this -> fh);
+
         $this -> currentSize = $fstat['size'];
 
         return $this -> size != $this -> currentSize;
     }
 
-    public function getRequest()
+    protected function getRequest()
     {
         $this -> open();
         $lines = array();
@@ -77,17 +102,32 @@ class FileHead
                 array_filter(explode(PHP_EOL, $data))
             );
             $this -> size = $this -> currentSize;
+            $this -> logWrite();
         }
         $this -> close();
         return $lines;
     }
 
-    public function run()
+    protected function logWrite()
     {
-        do {
-            foreach ($this -> getRequest() as $request) {
-                $this -> body -> dispatch($request);
+        $log = new \stdClass();
+        $log -> input = $this -> input;
+        $log -> size = $this -> size;
+        file_put_contents($this-> log, json_encode($log).PHP_EOL, LOCK_EX);
+    }
+
+    protected function sizeSetFromLog()
+    {
+        $log = json_decode(@file_get_contents($this -> log));
+        if (is_object($log)) {
+            if (property_exists($log, 'input') &&
+                $this -> input == $log -> input &&
+                property_exists($log, 'size') &&
+                is_integer($log -> size) &&
+                0 < $log -> size
+            ) {
+                $this -> size = $log -> size;
             }
-        } while (!$this -> inTest);
+        }
     }
 }
