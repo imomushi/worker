@@ -20,5 +20,4 @@ if (!class_exists('Imomushi\Worker\Body', true)) {
 }
 use Imomushi\Worker\Head\File;
 
-$fileHead  = new File();
-$fileHead -> run();
+(new File()) -> run();

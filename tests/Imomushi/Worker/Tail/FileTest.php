@@ -27,7 +27,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
     private $tmpTail;
     public function setUp()
     {
-        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'Imomushi.Tail.File');
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tail.file');
 
         $this -> target = new File($this -> tmpTail);
 

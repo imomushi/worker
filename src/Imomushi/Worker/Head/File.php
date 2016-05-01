@@ -38,7 +38,7 @@ class File
             $config['input'] : '/tmp/input.txt';
 
         $this -> log = isset($config['log']) ?
-            $config['log'] : '/tmp/imomushi.worker.head.file_head.log';
+            $config['log'] : '/tmp/imomushi.worker.head.file.log';
 
         $this -> body = new Body(
             isset($config['tail']) ?

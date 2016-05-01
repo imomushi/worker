@@ -33,9 +33,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
     private $tail;
     public function setUp()
     {
-        $this -> tmpInput = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.input.');
-        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.tail.');
-        $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file_head.log.');
+        $this -> tmpInput = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file.input.');
+        $this -> tmpTail = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file.tail.');
+        $this -> tmpLog = tempnam(sys_get_temp_dir(), 'imomushi.worker.tests.head.file.log.');
 
         $this -> tail = new File($this -> tmpTail);
         $this -> target = new FileExtend([
@@ -80,7 +80,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
             $default -> input()
         );
         $this -> assertEquals(
-            '/tmp/imomushi.worker.head.file_head.log',
+            '/tmp/imomushi.worker.head.file.log',
             $default -> log()
         );
         $body =    $default -> body();
@@ -132,7 +132,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
             $this -> target -> changed()
         );
 
-        $tmp = tempnam(sys_get_temp_dir(), 'Imomushi.');
+        $tmp = tempnam(sys_get_temp_dir(), 'imomushi.worker.head.file');
         $tmpInputHead = new FileExtend(['input' => $tmp, 'tail' => $this -> tail]);
         $tmpInputHead -> open();
         $tmpInputHead -> changed();

@@ -27,7 +27,7 @@ class EchoStdoutTest extends \PHPUnit_Framework_TestCase
     private $tmpStdOut;
     public function setUp()
     {
-        $this -> tmpStdOut = tempnam(sys_get_temp_dir(), 'Imomushi.Segment.EchoStdout.');
+        $this -> tmpStdOut = tempnam(sys_get_temp_dir(), 'imomushi.worker.segment.echoStdout.');
         $this -> target = new EchoStdout();
 
     }

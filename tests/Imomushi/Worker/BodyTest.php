@@ -27,7 +27,7 @@ class BodyTest extends \PHPUnit_Framework_TestCase
     private $tmpFile;
     public function setUp()
     {
-        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'Imomushi.Body');
+        $this -> tmpFile = tempnam(sys_get_temp_dir(), 'imomushi.worker.body');
         $this -> target = new Body(new \Imomushi\Worker\Tail\File($this -> tmpFile));
     }
 
