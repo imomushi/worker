@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Imomushi\\Worker\\": "src/"
+            "Imomushi\\Worker\\": "src/Imomushi/Worker/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Imomushi\\Worker\\Tests\\": "tests/"
+            "Imomushi\\Worker\\Tests\\": "tests/Imomushi/Worker/"
         }
     },
     "bin":[
