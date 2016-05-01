@@ -39,8 +39,6 @@ class FileTail
         $response -> pipeline_id = $pipelineId;
         $response -> segment_id = $segmentId;
         $response -> result  = $result;
-        $fh = fopen($this -> file, "a");
-        fprintf($fh, "%s".PHP_EOL, json_encode($response));
-        fclose($fh);
+        error_log(json_encode($response).PHP_EOL, 3, $this -> file);
     }
 }

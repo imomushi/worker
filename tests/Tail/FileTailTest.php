@@ -35,7 +35,7 @@ class FileTailTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        unlink($this -> tmpTail);
+//        unlink($this -> tmpTail);
     }
 
     public function testConstruct()
