@@ -10,7 +10,8 @@
         }
     ],
     "keywords": [
-        "reactphp"
+        "imomushi",
+        "bot"
     ],
     "require": {
         "php": ">=5.6"
@@ -33,11 +34,5 @@
     "bin":[
         "bin/imomushi-worker"
     ],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.0.1-dev"
-        }
-    },
-    "minimum-stability": "dev",
     "prefer-stable": true
 }

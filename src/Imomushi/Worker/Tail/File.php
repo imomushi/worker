@@ -13,7 +13,7 @@ namespace Imomushi\Worker\Tail;
 /**
  * Class File
  *
- * @package Imomushi\Worker
+ * @package Imomushi\Worker\Tail
  */
 class File
 {
