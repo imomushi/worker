@@ -118,24 +118,24 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testChanged()
+    public function testDiff()
     {
         $this -> assertTrue(
             method_exists(
                 $this -> target,
-                'changed'
+                'diff'
             )
         );
 
         $this -> target -> open();
         $this -> assertFalse(
-            $this -> target -> changed()
+            $this -> target -> diff()
         );
 
         $tmp = tempnam(sys_get_temp_dir(), 'imomushi.worker.head.file');
         $tmpInputHead = new FileExtend(['input' => $tmp, 'tail' => $this -> tail]);
         $tmpInputHead -> open();
-        $tmpInputHead -> changed();
+        $tmpInputHead -> diff();
 
         $fh = fopen($tmp, 'w');
         fwrite(
@@ -146,7 +146,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         fclose($fh);
 
         $this -> assertTrue(
-            $tmpInputHead -> changed()
+            $tmpInputHead -> diff()
         );
 
         $tmpInputHead -> close();
@@ -161,7 +161,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
                 'getRequest'
             )
         );
+        $this -> target -> open();
         $request = $this -> target -> getRequest();
+        $this -> target -> close();
         $this -> assertEmpty(
             $request
         );
@@ -174,7 +176,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
         );
         fclose($fh);
 
+        $this -> target -> open();
         $request = $this -> target -> getRequest();
+        $this -> target -> close();
         $this -> assertNotEmpty(
             $request
         );
@@ -183,7 +187,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             count($request)
         );
 
+        $this -> target -> open();
         $request = $this -> target -> getRequest();
+        $this -> target -> close();
         $this -> assertEmpty(
             $request
         );
@@ -215,7 +221,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             '"segment":"Imomushi", "args": {"arg1": 1, "arg2": 2}}'.PHP_EOL
         );
         fclose($fh);
+        $this -> target -> open();
         $request = $this -> target -> getRequest();
+        $this -> target -> close();
         $this -> assertNotEmpty(
             $request
         );
@@ -261,7 +269,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             $input
         );
         fclose($fh);
+        $this -> target -> open();
         $this -> target -> getRequest();
+        $this -> target -> close();
         $log = json_decode(file_get_contents($this -> tmpLog));
         $this -> assertNotNull(
             $log
@@ -281,7 +291,9 @@ class FileTest extends \PHPUnit_Framework_TestCase
             $input
         );
         fclose($fh);
+        $this -> target -> open();
         $this -> target -> getRequest();
+        $this -> target -> close();
         $log = json_decode(file_get_contents($this -> tmpLog));
         $this -> assertNotNull(
             $log

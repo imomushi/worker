@@ -50,9 +50,9 @@ class FileExtend extends \Imomushi\Worker\Head\File
     {
         return parent::close();
     }
-    public function changed()
+    public function diff()
     {
-        return parent::changed();
+        return parent::diff();
     }
     public function stop()
     {

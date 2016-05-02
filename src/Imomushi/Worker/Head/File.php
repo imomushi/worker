@@ -54,11 +54,13 @@ class File
      */
     public function run()
     {
+        $this -> open();
         do {
             foreach ($this -> getRequest() as $request) {
                 $this -> body -> dispatch($request);
             }
         } while (!$this -> stop);
+        $this -> close();
     }
 
     /**
@@ -77,22 +79,19 @@ class File
         return fclose($this -> fh);
     }
 
-    protected function changed()
+    protected function diff()
     {
         clearstatcache();
         $fstat = fstat($this -> fh);
-
         $this -> currentSize = $fstat['size'];
-
         return $this -> size != $this -> currentSize;
     }
 
     protected function getRequest()
     {
-        $this -> open();
         $lines = array();
-        if ($this -> changed()) {
-            fseek($this -> fh, $this -> size);
+        if ($this -> diff()) {
+            fseek($this -> fh, $this -> size, 0);
             $data = "";
             while ($d = fgets($this -> fh)) {
                 $data .= $d;
@@ -104,7 +103,6 @@ class File
             $this -> size = $this -> currentSize;
             $this -> logWrite();
         }
-        $this -> close();
         return $lines;
     }
 
