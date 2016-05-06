@@ -8,16 +8,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests\Head;
+namespace Imomushi\Tests\Worker\Head;
 
 use Imomushi\Worker\Tail\File;
 use Imomushi\Worker\Body;
-use Imomushi\Worker\Tests\Head\FileExtend;
+use Imomushi\Tests\Worker\Head\FileExtend;
 
 /**
  * Class FileTest
  *
- * @package Imomushi\Worker\Tests\Head
+ * @package Imomushi\Tests\Worker\Head
  */
 
 

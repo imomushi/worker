@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests\Tail;
+namespace Imomushi\Tests\Worker\Tail;
 
 use Imomushi\Worker\Tail\File;
 
 /**
  * Class FileTest
  *
- * @package Imomushi\Worker\Tests
+ * @package Imomushi\Tests\Worker
  */
 
 class FileTest extends \PHPUnit_Framework_TestCase

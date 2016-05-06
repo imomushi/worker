@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests;
+namespace Imomushi\Tests\Worker;
 
 use Imomushi\Worker\Body;
 
 /**
  * Class BodyTest
  *
- * @package Imomushi\Worker\Tests
+ * @package Imomushi\Tests\Worker
  */
 
 class BodyTest extends \PHPUnit_Framework_TestCase

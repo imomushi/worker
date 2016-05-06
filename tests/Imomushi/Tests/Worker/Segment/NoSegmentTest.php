@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests\Segment;
+namespace Imomushi\Tests\Worker\Segment;
 
 use Imomushi\Worker\Segment\NoSegment;
 
 /**
  * Class NoSegmentTest
  *
- * @package Imomushi\Worker\Tests
+ * @package Imomushi\Tests\Worker
  */
 
 class NoSegmentTest extends \PHPUnit_Framework_TestCase

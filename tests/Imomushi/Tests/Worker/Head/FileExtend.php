@@ -8,12 +8,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests\Head;
+namespace Imomushi\Tests\Worker\Head;
 
 /**
  * Class FileExtend
  *
- * @package Imomushi\Worker\Tests\Head
+ * @package Imomushi\Tests\Worker\Head
  */
 
 class FileExtend extends \Imomushi\Worker\Head\File

@@ -8,14 +8,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Imomushi\Worker\Tests\Segment;
+namespace Imomushi\Tests\Worker\Segment;
 
 use Imomushi\Worker\Segment\EchoStdout;
 
 /**
  * Class EchoStdoutTest
  *
- * @package Imomushi\Worker\Tests
+ * @package Imomushi\Tests\Worker
  */
 
 class EchoStdoutTest extends \PHPUnit_Framework_TestCase

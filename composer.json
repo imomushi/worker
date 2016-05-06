@@ -28,7 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Imomushi\\Worker\\Tests\\": "tests/Imomushi/Worker/Tests/"
+            "Imomushi\\Tests\\Worker\\": "tests/Imomushi/Tests/Worker/"
         }
     },
     "bin":[
