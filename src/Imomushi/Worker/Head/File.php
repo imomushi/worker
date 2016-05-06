@@ -54,13 +54,11 @@ class File
      */
     public function run()
     {
-        $this -> open();
         do {
-            foreach ($this -> getRequest() as $request) {
+            foreach ($this -> onChange() as $request) {
                 $this -> body -> dispatch($request);
             }
         } while (!$this -> stop);
-        $this -> close();
     }
 
     /**
@@ -83,26 +81,28 @@ class File
     {
         clearstatcache();
         $fstat = fstat($this -> fh);
-        $this -> currentSize = $fstat['size'];
-        return $this -> size != $this -> currentSize;
+        $this -> currentSize = intval($fstat['size']);
+        return  intval($this -> currentSize - $this -> size);
     }
 
-    protected function getRequest()
+    protected function onChange()
     {
+        $this -> open();
         $lines = array();
-        if ($this -> diff()) {
-            fseek($this -> fh, $this -> size, 0);
+        if (($diff = $this -> diff()) > 0) {
+            fseek($this -> fh, $this -> size, SEEK_SET);
             $data = "";
-            while ($d = fgets($this -> fh)) {
+            while (false !== ($d = fgets($this -> fh))) {
                 $data .= $d;
             }
             $lines = array_map(
                 'json_decode',
                 array_filter(explode(PHP_EOL, $data))
             );
-            $this -> size = $this -> currentSize;
+            $this -> size += $diff;
             $this -> logWrite();
         }
+        $this -> close();
         return $lines;
     }
 

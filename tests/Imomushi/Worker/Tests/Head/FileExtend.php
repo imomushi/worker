@@ -58,9 +58,9 @@ class FileExtend extends \Imomushi\Worker\Head\File
     {
         $this -> stop = true;
     }
-    public function getRequest()
+    public function onChange()
     {
-        return parent::getRequest();
+        return parent::onChange();
     }
     public function logWrite()
     {
